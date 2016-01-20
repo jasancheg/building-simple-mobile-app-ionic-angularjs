@@ -20,6 +20,10 @@ angular
 			.state('home', {
 				url: '/home',
 				templateUrl: 'app/home/home.html'
+			})
+			.state('app', {
+				url: '/app',
+				templateUrl: 'app/layout/menu-layout.html'
 			});
 
 		// if none of the above states are matched, use this as the fallback
