@@ -15,6 +15,10 @@ angular
         });
     })
 
+    .config(function($ionicConfigProvider){
+        $ionicConfigProvider.tabs.position("bottom");
+    })
+
     .config(function($stateProvider, $urlRouterProvider) {
         $stateProvider
             .state('home', {
