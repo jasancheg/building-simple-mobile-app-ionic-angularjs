@@ -3,14 +3,18 @@
 
     angular
         .module('eliteApp')
-        .controller('LeaguesCtrl', ['eliteApi', LeaguesCtrl]);
+        .controller('LeaguesCtrl', ['eliteApi', '$state', LeaguesCtrl]);
 
-    function LeaguesCtrl(eliteApi) {
+    function LeaguesCtrl(eliteApi, $state) {
         var vm = this;
-        var leagues = eliteApi.getLeagues();
-        var leagueData = eliteApi.getLeagueData();
+        vm.leagues = eliteApi.getLeagues();
+        vm.leagueData = eliteApi.getLeagueData();
 
-        console.log(leagues, leagueData);
+        vm.selectLeague = function(leagueId) {
+            // TODO: select correct league
+            $state.go("app.teams");
+        };
+        // console.log(vm.leagues, vm.leagueData);
     }
 })();
 
