@@ -2,7 +2,18 @@
     <ion-content class="has-header">
        <div class="list">
             <a ui-sref="app.game({id: game.gameId})" class="item item-icon-right" ng-repeat="game in vm.games">
-                {{game.opponent}} {{game.scoreDisplay}}
+                <div class="row">
+                    <div class="col-20">
+                        <p>{{game.time | date: 'M/d/yy'}}</p>
+                        <p>{{game.time | date: 'shortTime'}}</p>
+                    </div>
+                    <div class="col-center col-60">
+                        <h3>{{game.homeAway}} {{game.opponent}}</h3>
+                    </div>
+                    <div class="col-20 col-center">
+                        <h4 class="positive">{{game.scoreDisplay}}</h4>
+                    </div>
+                </div>
                 <i class="icon ion-chevron-right icon-accessory"></i>
             </a>
         </div>
