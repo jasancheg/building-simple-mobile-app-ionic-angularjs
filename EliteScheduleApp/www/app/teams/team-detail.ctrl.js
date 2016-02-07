@@ -3,10 +3,11 @@
 
     angular
         .module('eliteApp')
-        .controller('teamDetailCtrl', ['$stateParams', teamDetailCtrl]);
+        .controller('TeamDetailCtrl', ['$stateParams', TeamDetailCtrl]);
 
-    function teamDetailCtrl($stateParams) {
+    function TeamDetailCtrl($stateParams) {
         var vm = this;
+        vm.stateId = $stateParams.id;
         console.log('$stateParams', $stateParams);
     }
 })();
