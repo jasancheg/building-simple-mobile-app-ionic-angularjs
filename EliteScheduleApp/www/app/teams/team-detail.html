@@ -1,6 +1,10 @@
-<ion-view view-title="Team detail" ng-controller="TeamDetailCtrl as vm">
+<ion-view view-title="{{vm.teamName}}" ng-controller="TeamDetailCtrl as vm">
     <ion-content class="has-header">
-        <h1>Team detail</h1>
-        <p>Current id: {{vm.stateId}}</p>
+       <div class="list">
+            <a ui-sref="app.game({id: game.gameId})" class="item item-icon-right" ng-repeat="game in vm.games">
+                {{game.opponent}} {{game.scoreDisplay}}
+                <i class="icon ion-chevron-right icon-accessory"></i>
+            </a>
+        </div>
     </ion-content>
 </ion-view>
