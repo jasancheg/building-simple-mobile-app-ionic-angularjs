@@ -14,7 +14,6 @@
             // TODO: select correct league
             $state.go("app.teams");
         };
-        // console.log(vm.leagues, vm.leagueData);
     }
 })();
 

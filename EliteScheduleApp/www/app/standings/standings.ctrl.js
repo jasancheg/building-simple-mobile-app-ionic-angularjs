@@ -3,11 +3,12 @@
 
     angular
         .module('eliteApp')
-        .controller('LocationsCtrl', ['eliteApi', LocationsCtrl]);
+        .controller('StandingsCtrl', ['eliteApi', StandingsCtrl]);
 
-    function LocationsCtrl(eliteApi) {
+    function StandingsCtrl(eliteApi) {
         var vm = this;
+
         var data = eliteApi.getLeagueData();
-        vm.locations = data.locations;
+        vm.standings = data.standings;
     }
 })();
