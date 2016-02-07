@@ -3,7 +3,7 @@
 
     angular
         .module('eliteApp')
-        .factory(eliteApi, [eliteApi])
+        .factory('eliteApi', [eliteApi])
     function eliteApi() {
         var leagues = [{}];
         var leagueData = {

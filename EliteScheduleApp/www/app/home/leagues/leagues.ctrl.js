@@ -7,10 +7,10 @@
 
     function LeaguesCtrl(eliteApi) {
         var vm = this;
-        // var leagues = eliteApi.getLeagues();
-        // var leagueData = eliteApi.getgetLeagueData();
+        var leagues = eliteApi.getLeagues();
+        var leagueData = eliteApi.getLeagueData();
 
-        console.log('leagues, leagueData');
+        console.log(leagues, leagueData);
     }
 })();
 
