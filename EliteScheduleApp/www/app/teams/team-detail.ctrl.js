@@ -10,36 +10,37 @@
         var found = false;
         var divTeams = [];
         var divStandings = [];
-        var data = eliteApi.getLeagueData();
 
         vm.teamId = Number($stateParams.id);
 
-        // get every division standing
-        divStandings = flatCollectionByProperty(data.standings, 'divisionStandings');
-        vm.teamStanding = getObjectByProperty(divStandings, "teamId", vm.teamId);
+        eliteApi.getLeagueData().then(function(data) {
+            // get every division standing
+            divStandings = flatCollectionByProperty(data.standings, 'divisionStandings');
+            vm.teamStanding = getObjectByProperty(divStandings, "teamId", vm.teamId);
 
-        // get every division team
-        divTeams = flatCollectionByProperty(data.teams, 'divisionTeams');
-        vm.team = getObjectByProperty(divTeams, "id", vm.teamId);
+            // get every division team
+            divTeams = flatCollectionByProperty(data.teams, 'divisionTeams');
+            vm.team = getObjectByProperty(divTeams, "id", vm.teamId);
 
-        vm.teamName = vm.team.name;
-        vm.games = _.chain(data.games)
-                    .filter(isTeamInGame)
-                    .map(function(item) {
-                        var isTeam1 = (item.team1Id === vm.teamId ? true : false);
-                        var opponentName = isTeam1 ? item.team2 : item.team1;
-                        var scoreDisplay = getScoreDisplay(isTeam1, item.team1Score, item.team2Score);
-                        return {
-                            gameId: item.id,
-                            opponent: opponentName,
-                            time: item.time,
-                            location: item.location,
-                            locationUrl: item.locationUrl,
-                            scoreDisplay: scoreDisplay,
-                            homeAway: (isTeam1 ? "vs" : "at")
-                        };
-                    })
-                    .value();
+            vm.teamName = vm.team.name;
+            vm.games = _.chain(data.games)
+                        .filter(isTeamInGame)
+                        .map(function(item) {
+                            var isTeam1 = (item.team1Id === vm.teamId ? true : false);
+                            var opponentName = isTeam1 ? item.team2 : item.team1;
+                            var scoreDisplay = getScoreDisplay(isTeam1, item.team1Score, item.team2Score);
+                            return {
+                                gameId: item.id,
+                                opponent: opponentName,
+                                time: item.time,
+                                location: item.location,
+                                locationUrl: item.locationUrl,
+                                scoreDisplay: scoreDisplay,
+                                homeAway: (isTeam1 ? "vs" : "at")
+                            };
+                        })
+                        .value();
+        });
 
         vm.following = false;
         vm.toggleFollow = function() {

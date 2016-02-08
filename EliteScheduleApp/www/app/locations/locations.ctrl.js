@@ -7,7 +7,7 @@
 
     function LocationsCtrl(eliteApi) {
         var vm = this;
-        eliteApi.getLeagueData(function(data) {
+        eliteApi.getLeagueData().then(function(data) {
             vm.locations = data.locations;
         });
     }

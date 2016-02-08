@@ -8,8 +8,7 @@
     function TeamsCtrl(eliteApi) {
         var vm = this;
 
-        eliteApi.getLeagueData(function(data) {
-            console.log("JOJOJO: ", data);
+        eliteApi.getLeagueData().then(function(data) {
             vm.teams = data.teams;
         });
     }
