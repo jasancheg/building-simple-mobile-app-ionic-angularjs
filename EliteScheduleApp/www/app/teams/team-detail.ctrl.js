@@ -3,9 +3,9 @@
 
     angular
         .module('eliteApp')
-        .controller('TeamDetailCtrl', ['$stateParams', 'eliteApi', TeamDetailCtrl]);
+        .controller('TeamDetailCtrl', ['$stateParams', '$ionicPopup', 'eliteApi', TeamDetailCtrl]);
 
-    function TeamDetailCtrl($stateParams, eliteApi) {
+    function TeamDetailCtrl($stateParams, $ionicPopup, eliteApi) {
         var vm = this;
         var found = false;
         var divTeams = [];
@@ -43,9 +43,21 @@
 
         vm.following = false;
         vm.toggleFollow = function() {
-
-            vm.following = !vm.following;
+            if(vm.following) {
+                var confirmPopup = $ionicPopup.confirm({
+                    title: 'Unfollow?',
+                    template: 'Are you sureyou want to unfollow?'
+                });
+                confirmPopup.then(function(res) {
+                    if(res) {
+                        vm.following = !vm.following;
+                    }
+                })
+            } else {
+                vm.following = !vm.following;
+            }
         }
+
         function getObjectByProperty(obj, prop, value) {
             // get team object from collection
             for(var j = 0; j < obj.length; j++) {
