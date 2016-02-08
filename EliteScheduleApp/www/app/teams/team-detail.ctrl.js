@@ -3,9 +3,9 @@
 
     angular
         .module('eliteApp')
-        .controller('TeamDetailCtrl', ['$stateParams', '$ionicPopup', 'eliteApi', TeamDetailCtrl]);
+        .controller('TeamDetailCtrl', ['$stateParams', '$ionicPopup', 'eliteApi', 'myTeamsService', TeamDetailCtrl]);
 
-    function TeamDetailCtrl($stateParams, $ionicPopup, eliteApi) {
+    function TeamDetailCtrl($stateParams, $ionicPopup, eliteApi, myTeamsService) {
         var vm = this;
         var found = false;
         var divTeams = [];
@@ -21,6 +21,7 @@
             // get every division team
             divTeams = flatCollectionByProperty(data.teams, 'divisionTeams');
             vm.team = getObjectByProperty(divTeams, "id", vm.teamId);
+            vm.following = myTeamsService.isFollowingTeam(vm.team.id);
 
             vm.teamName = vm.team.name;
             vm.games = _.chain(data.games)
@@ -42,9 +43,9 @@
                         .value();
         });
 
-        vm.following = false;
         vm.toggleFollow = function() {
-            if(vm.following) {
+            console.log('isFollowingTeam', myTeamsService.isFollowingTeam(vm.team.id));
+            if(myTeamsService.isFollowingTeam(vm.team.id)) {
                 var confirmPopup = $ionicPopup.confirm({
                     title: 'Unfollow?',
                     template: 'Are you sureyou want to unfollow?'
@@ -52,10 +53,12 @@
                 confirmPopup.then(function(res) {
                     if(res) {
                         vm.following = !vm.following;
+                        myTeamsService.unfollowTeam(vm.team.id)
                     }
                 })
             } else {
                 vm.following = !vm.following;
+                myTeamsService.followTeam(vm.team)
             }
         }
 
@@ -64,7 +67,6 @@
             for(var j = 0; j < obj.length; j++) {
                 for(var k = 0; k < obj[j].length; k++) {
                     if(obj[j][k][prop] === value) {
-                        console.log('Si que entro: ', obj[j][k][prop]);
                         return obj[j][k];
                     }
                 }

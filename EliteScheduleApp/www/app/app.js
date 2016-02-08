@@ -12,8 +12,8 @@ angular
                 // org.apche.cordova.statusbar required
                 StatusBar.styleDefault();
             }
-            CacheFactory("leagueDataCache", {storageMode: "localStorage", maxAge: 5000, deleteOnExpire: "aggressive"});
-            CacheFactory("leaguesCache", {storageMode: "localStorage", maxAge: 5000, deleteOnExpire: "aggressive"});
+            CacheFactory("leagueDataCache", {storageMode: "localStorage", maxAge: 1000000, deleteOnExpire: "aggressive"});
+            CacheFactory("leaguesCache", {storageMode: "localStorage", maxAge: 1000000, deleteOnExpire: "aggressive"});
             CacheFactory("myTeamsCache", {storageMode: "localStorage"});
             CacheFactory("staticCache", {storageMode: "localStorage"});
         });
