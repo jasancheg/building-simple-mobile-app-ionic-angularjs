@@ -1,4 +1,10 @@
 {
   "name": "EliteScheduleApp",
-  "app_id": "1ec6d79d"
+  "app_id": "1ec6d79d",
+  "proxies": [
+    {
+      "path": "/api",
+      "proxyUrl": "http://elite-schedule.net/api"
+    }
+  ]
 }

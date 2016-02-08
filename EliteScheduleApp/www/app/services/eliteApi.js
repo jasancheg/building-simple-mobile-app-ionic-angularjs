@@ -51,8 +51,18 @@
                 deferred.resolve(leaguesData);
             } else {
                 $ionicLoading.show({template: 'Loading...'});
+
+                var options = {
+                    headers: {
+                        'Access-Control-Allow-Origin' : '*',
+                        'Access-Control-Allow-Methods' : 'POST, GET, OPTIONS, PUT',
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    }
+                };
+
                 $http
-                    .get("http://elite-schedule.net/api/leaguedata")
+                    .get("http://elite-schedule.net/api/leaguedata", options)
                     .success(function(data) {
                         $ionicLoading.hide();
                         console.log("Received data via HTTP");
@@ -69,10 +79,18 @@
             return deferred.promise;
         }
 
-        function getLeagueData() {
+        function getLeagueData(forceRefresh) {
+            if(typeof forceRefresh === 'undefined') {
+                forceRefresh = false;
+            }
+
             var deferred = $q.defer();
             var cacheKey = 'leagueData-' + getLeagueId();
-            var leagueData = self.leagueDataCache.get(cacheKey);
+            var leagueData = null;
+
+            if(!forceRefresh) {
+                leagueData = self.leagueDataCache.get(cacheKey);
+            }
 
             if(leagueData) {
                 console.log("Found data in cache", leagueData);
