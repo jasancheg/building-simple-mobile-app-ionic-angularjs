@@ -12,7 +12,7 @@
         });
 
         vm.selectLeague = function(leagueId) {
-            eliteApi.setLeagueId(id);
+            eliteApi.setLeagueId(leagueId);
             $state.go("app.teams");
         };
     }

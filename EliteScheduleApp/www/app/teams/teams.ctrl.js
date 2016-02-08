@@ -9,6 +9,7 @@
         var vm = this;
 
         eliteApi.getLeagueData(function(data) {
+            console.log("JOJOJO: ", data);
             vm.teams = data.teams;
         });
     }
