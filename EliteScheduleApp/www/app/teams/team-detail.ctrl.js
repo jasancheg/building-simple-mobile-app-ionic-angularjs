@@ -41,6 +41,11 @@
                     })
                     .value();
 
+        vm.following = false;
+        vm.toggleFollow = function() {
+
+            vm.following = !vm.following;
+        }
         function getObjectByProperty(obj, prop, value) {
             // get team object from collection
             for(var j = 0; j < obj.length; j++) {
