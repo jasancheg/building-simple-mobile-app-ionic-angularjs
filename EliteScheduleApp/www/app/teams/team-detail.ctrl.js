@@ -7,37 +7,22 @@
 
     function TeamDetailCtrl($stateParams, eliteApi) {
         var vm = this;
+        var found = false;
+        var divTeams = [];
+        var divStandings = [];
+        var data = eliteApi.getLeagueData();
 
         vm.teamId = Number($stateParams.id);
 
-        var team;
-        var found = false;
-        var divTeams = [];
-        var data = eliteApi.getLeagueData();
-
-        // var team = _.chain(divTeams)
-        //             .flatten(data.teams)
-        //             .find({"id": vm.teamId})
-        //             .value();
+        // get every division standing
+        divStandings = flatCollectionByProperty(data.standings, 'divisionStandings');
+        vm.teamStanding = getObjectByProperty(divStandings, "teamId", vm.teamId);
 
         // get every division team
-        for(var i = 0; i < data.teams.length; i++) {
-            divTeams.push(data.teams[i].divisionTeams)
-        }
+        divTeams = flatCollectionByProperty(data.teams, 'divisionTeams');
+        vm.team = getObjectByProperty(divTeams, "id", vm.teamId);
 
-        // get team object from division
-        for(var j = 0; j < divTeams.length; j++) {
-            for(var k = 0; k < divTeams[j].length; k++) {
-                if(divTeams[j][k].id === vm.teamId) {
-                    team = divTeams[j][k];
-                    found = true;
-                }
-            }
-        }
-
-        vm.teamName = team.name;
-        console.log('team: ', team);
-
+        vm.teamName = vm.team.name;
         vm.games = _.chain(data.games)
                     .filter(isTeamInGame)
                     .map(function(item) {
@@ -56,13 +41,33 @@
                     })
                     .value();
 
-        console.log('vm.games: ', vm.games);
+        function getObjectByProperty(obj, prop, value) {
+            // get team object from collection
+            for(var j = 0; j < obj.length; j++) {
+                for(var k = 0; k < obj[j].length; k++) {
+                    if(obj[j][k][prop] === value) {
+                        console.log('Si que entro: ', obj[j][k][prop]);
+                        return obj[j][k];
+                    }
+                }
+            }
+            return {};
+        }
+
+        function flatCollectionByProperty(collection, prop) {
+            var newCollection = [];
+            for(var m = 0; m < collection.length; m++) {
+                newCollection.push(collection[m][prop])
+            }
+            return newCollection;
+        }
+
         function isTeamInGame (item) {
+
             return item.team1Id === vm.teamId || item.team2Id === vm.teamId;
         }
 
         function getScoreDisplay (isTeam1, team1Score, team2Score) {
-            console.log('getScoreDisplay: [isTeam1, team1Score, team2Score]', isTeam1, team1Score, team2Score );
             if (team1Score && team2Score) {
                 var teamScore = (isTeam1 ? team1Score : team2Score);
                 var opponentScore = (isTeam1 ? team2Score : team1Score);
