@@ -1,7 +1,7 @@
 angular
-    .module('eliteApp', ['ionic'])
+    .module('eliteApp', ['ionic', 'angular-cache'])
 
-    .run(function($ionicPlatform) {
+    .run(function($ionicPlatform, CacheFactory) {
         $ionicPlatform.ready(function() {
             // Hide the accessory bar by default (remove this to show the accessory bar ab )
             // // For form inputs)
@@ -12,6 +12,10 @@ angular
                 // org.apche.cordova.statusbar required
                 StatusBar.styleDefault();
             }
+            CacheFactory("leagueDataCache", {storageMode: "localStorage", maxAge: 5000, deleteOnExpire: "aggressive"});
+            CacheFactory("leaguesCache", {storageMode: "localStorage", maxAge: 5000, deleteOnExpire: "aggressive"});
+            CacheFactory("myTeamsCache", {storageMode: "localStorage"});
+            CacheFactory("staticCache", {storageMode: "localStorage"});
         });
     })
 
